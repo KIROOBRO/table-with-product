@@ -122,7 +122,13 @@
       <mat-datepicker #manufacture></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field class="form-control" appearance="fill">
+    <mat-form-field
+      *ngIf="
+        formGroup.get(EProductFormKeys.EXPIRATION_TYPE)?.value === 'expirable'
+      "
+      class="form-control"
+      appearance="fill"
+    >
       <mat-label>Expiration date</mat-label>
       <input
         matInput
