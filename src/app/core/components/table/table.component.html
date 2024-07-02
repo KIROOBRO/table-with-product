@@ -1,0 +1,66 @@
+<div class="table-container">
+  <div class="table-wrapper">
+    <table class="table">
+      <thead class="table-header">
+        <tr>
+          <th
+            *ngFor="let headItem of tableHeaders"
+            [style.width.px]="headItem.colWidth"
+            [style.min-width.px]="headItem.colWidth"
+            [ngClass]="headItem.classes || ''"
+            class="table-header-item"
+          >
+            <p class="table-header-item__title">
+              {{ headItem.title }}
+            </p>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody class="table-body">
+        <ng-container
+          *ngFor="
+            let tableItem of tableData.results
+              | paginate
+                : {
+                    itemsPerPage: currentCount,
+                    currentPage: currentPage,
+                    totalItems: tableData.count
+                  };
+            index as index;
+            trackBy: trackByFn
+          "
+        >
+          <tr class="table-row">
+            <ng-container
+              *ngTemplateOutlet="
+                cellTemplateRef;
+                context: {
+                  $implicit: tableItem,
+                  context: context,
+                  index: index
+                }
+              "
+            ></ng-container>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="isShowPagination" class="pagination-wrapper">
+<!--  <app-pagination-count-->
+<!--    [selectedCount]="currentCount"-->
+<!--    [options]="countOptions"-->
+<!--    (countChange)="handleCountChange($event)"-->
+<!--  >-->
+<!--  </app-pagination-count>-->
+
+  <div class="pagination">
+    <pagination-controls
+      [maxSize]="5"
+      (pageChange)="handlePageChange($event)"
+    ></pagination-controls>
+  </div>
+</div>

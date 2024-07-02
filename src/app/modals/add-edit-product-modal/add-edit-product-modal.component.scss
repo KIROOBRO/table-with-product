@@ -1,0 +1,57 @@
+@import "src/assets/styles/vars";
+@import "src/assets/styles/mixins";
+@import "src/assets/styles/extends";
+
+::ng-deep .add-edit-product-modal {
+  @include base-modal();
+
+  & .form {
+    &-wrapper {
+      gap: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-control {
+      width: 100%;
+    }
+  }
+
+  & .fields-wrapper {
+    &-header {
+      padding: 8px;
+      background: $blue;
+      border-radius: 4px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr .5fr;
+
+      &-item {
+        &.centered {
+          margin: 0 auto;
+        }
+      }
+    }
+
+    &-item {
+      padding: 4px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr .5fr;
+      grid-column-gap: 4px;
+
+      & .centered {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      & .pointer {
+        cursor: pointer;
+      }
+    }
+
+    &-btn {
+      display: flex;
+      margin-left: auto;
+    }
+  }
+}

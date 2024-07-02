@@ -1,0 +1,165 @@
+<div class="modal-header">
+  <h2 class="modal-header__title">{{ getHeaderName }}</h2>
+
+  <mat-icon
+    class="modal-header__icon"
+    [fontIcon]="'close'"
+    (click)="closeModal()"
+  ></mat-icon>
+</div>
+<div class="modal-body">
+  <div class="form-wrapper">
+    <mat-form-field class="form-control">
+      <mat-label>Name</mat-label>
+      <input
+        [formControl]="formGroup.get(EProductFormKeys.NAME) | controlConverter"
+        matInput
+        type="text"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="form-control" appearance="fill">
+      <mat-label>Expiration Type</mat-label>
+      <mat-select
+        [formControl]="
+          formGroup.get(EProductFormKeys.EXPIRATION_TYPE) | controlConverter
+        "
+      >
+        <mat-option
+          *ngFor="let type of MOK_EXPIRATION_TYPES"
+          [value]="type.value"
+        >
+          {{ type.title }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="fields-wrapper">
+      <div class="fields-wrapper-header">
+        <p class="fields-wrapper-header-item">Field</p>
+        <p class="fields-wrapper-header-item">Value</p>
+        <p class="fields-wrapper-header-item centered">Date</p>
+        <p class="fields-wrapper-header-item centered">Del</p>
+      </div>
+
+      <div
+        class="fields-wrapper-item"
+        *ngFor="let field of fieldsFormArray.controls; index as idx"
+      >
+        <mat-form-field>
+          <input
+            [formControl]="field.get('name') | controlConverter"
+            matInput
+            type="text"
+            placeholder="*"
+          />
+        </mat-form-field>
+
+        <mat-form-field
+          *ngIf="!field.get('is_date')?.value; else datePickerTemp"
+          class="form-control"
+        >
+          <input
+            [formControl]="field.get('value') | controlConverter"
+            matInput
+            type="text"
+            placeholder="*"
+          />
+        </mat-form-field>
+        <ng-template #datePickerTemp>
+          <mat-form-field appearance="fill">
+            <mat-label>Manufacture date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="fieldValue"
+              [formControl]="field.get('value') | controlConverter"
+              (dateChange)="handleChangeFieldDateValue(field)"
+            />
+            <mat-hint>DD.MM.YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="fieldValue"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #fieldValue></mat-datepicker>
+          </mat-form-field>
+        </ng-template>
+
+        <mat-checkbox
+          class="centered"
+          [formControl]="field.get('is_date') | controlConverter"
+          (change)="handleClearFieldValue(field)"
+        ></mat-checkbox>
+
+        <div class="centered" (click)="deleteField(field, idx)">
+          <mat-icon class="pointer" [fontIcon]="'delete'"></mat-icon>
+        </div>
+      </div>
+
+      <button
+        class="fields-wrapper-btn"
+        mat-raised-button
+        color="primary"
+        (click)="addField()"
+      >
+        Add
+      </button>
+    </div>
+
+    <mat-form-field class="form-control" appearance="fill">
+      <mat-label>Manufacture date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="manufacture"
+        [formControl]="
+          formGroup.get(EProductFormKeys.MANUFACTURE_DATE) | controlConverter
+        "
+      />
+      <mat-hint>DD.MM.YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="manufacture"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #manufacture></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="form-control" appearance="fill">
+      <mat-label>Expiration date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="expiration"
+        [formControl]="
+          formGroup.get(EProductFormKeys.EXPIRATION_DATE) | controlConverter
+        "
+      />
+      <mat-hint>DD.MM.YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="expiration"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #expiration></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="form-control">
+      <mat-label>Comment</mat-label>
+      <textarea
+        matInput
+        placeholder="Ex. This product is..."
+        [formControl]="
+          formGroup.get(EProductFormKeys.COMMENT) | controlConverter
+        "
+      ></textarea>
+    </mat-form-field>
+  </div>
+</div>
+<div class="modal-footer">
+  <button mat-raised-button (click)="closeModal()">Close</button>
+
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!formGroup.valid"
+    (click)="handleSubmit()"
+  >
+    Add product
+  </button>
+</div>

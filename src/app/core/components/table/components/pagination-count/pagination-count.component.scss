@@ -1,0 +1,41 @@
+@import "src/assets/styles/vars";
+@import "src/assets/styles/mixins";
+
+.pagination-count {
+  &-wrapper {
+    width: 68px;
+    padding: 8px 12px;
+    border: 1px solid $blue;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  &-value {
+    @include font-base(10px, 400, 13px, normal, $open-sans);
+
+    width: 18px;
+    height: 18px;
+    padding: 4px 6px;
+    color: $white;
+    background: $blue;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-icon {
+    @include svg-stroke($blue);
+    @include svg-size(18px, 18px);
+
+    transition: .2s ease-in-out;
+
+    &.active {
+      transform: rotateZ(180deg);
+      transition: .2s ease-in-out;
+    }
+  }
+}

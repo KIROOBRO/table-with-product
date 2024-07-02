@@ -1,0 +1,24 @@
+<div
+  class="pagination-count-wrapper"
+  [matMenuTriggerFor]="menu"
+  (click)="handleOpenMenu()"
+>
+  <div class="pagination-count-value">{{ selectedCount }}</div>
+  <app-icon
+    class="pagination-count-icon"
+    [name]="'down_arrow'"
+    [class.active]="isMenuActive"
+  ></app-icon>
+
+  <mat-menu #menu="matMenu" class="drop-down-menu" (closed)="handleOpenMenu()">
+    <mat-radio-group [(ngModel)]="selectedCount">
+      <ng-container *ngFor="let item of options">
+        <div mat-menu-item class="item" (click)="handleSelectCount(item)">
+          <mat-radio-button [value]="item">
+            {{ item }}
+          </mat-radio-button>
+        </div>
+      </ng-container>
+    </mat-radio-group>
+  </mat-menu>
+</div>

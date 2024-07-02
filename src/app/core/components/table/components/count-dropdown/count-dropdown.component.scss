@@ -1,0 +1,57 @@
+@import "src/assets/styles/vars";
+@import "src/assets/styles/mixins";
+@import "src/assets/styles/extends";
+
+.count {
+  @include font-base(14px, 400, 19px, normal, $open-sans);
+
+  &-drop-down {
+    cursor: pointer;
+  }
+
+  color: $blue;
+  border-radius: 60px;
+  border: 1px solid $blue-hover;
+  padding: 2px 8px;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+
+  &.active {
+    box-shadow: 0 0 0 4px $box-shadow, 0 1px 2px 0 rgba(0, 114, 255, 0.05);
+  }
+}
+
+.header {
+  @include font-base(16px, 400, 19px, normal, $open-sans);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $grey-7;
+  padding: 6px 16px;
+  border-bottom: 1px solid $inactive-2;
+
+  & .icon {
+    @include svg-stroke($blue);
+    @include svg-size(24px, 24px);
+
+    cursor: pointer;
+  }
+}
+
+.main {
+  @extend .scroll-bar;
+
+  max-height: 220px;
+  display: grid;
+  overflow-y: scroll;
+  min-width: 245px;
+
+  &-item {
+    @include font-base(14px, 400, 19px, normal, $open-sans);
+
+    color: $grey-3;
+    padding: 12.5px 16px;
+  }
+}

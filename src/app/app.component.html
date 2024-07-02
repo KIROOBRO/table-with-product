@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="add-btn">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="openAddEditProductModal()"
+    >
+      Add product
+    </button>
+  </div>
+
+  <ng-container *ngIf="products$ | async as products">
+    <app-table
+      [tableHeaders]="PRODUCTS_TABLE_HEADERS"
+      [tableData]="products"
+      [cellTemplateRef]="cellTemplateRef"
+    ></app-table>
+    <ng-template #cellTemplateRef let-tableItem>
+      <td class="table-cell">
+        <p class="table-text">
+          {{ tableItem.id }}
+        </p>
+      </td>
+      <td class="table-cell">
+        <p class="table-text">
+          {{ (tableItem.name | titlecase) || '-' }}
+        </p>
+      </td>
+      <td class="table-cell">
+        <p class="table-text">
+          {{ (tableItem.manufacture_date | date: 'MM.dd.yyyy') || '-' }}
+        </p>
+      </td>
+      <td class="table-cell">
+        <p class="table-text">
+          {{ (tableItem.expiration_date | date: 'MM.dd.yyyy') || '-' }}
+        </p>
+      </td>
+      <td class="table-cell">
+        <p class="table-text">
+          {{ tableItem.comment || '-' }}
+        </p>
+      </td>
+      <td class="table-cell">
+        <div class="actions">
+          <!--        <app-icon-->
+          <!--          class="actions invite"-->
+          <!--          [name]="'add_user_circle'"-->
+          <!--          (click)="openInviteModal($event, tableItem.id)"-->
+          <!--        ></app-icon>-->
+
+          <!--        <app-icon-->
+          <!--          class="actions delete"-->
+          <!--          [name]="'delete'"-->
+          <!--          (click)="openDeleteModal($event, tableItem.id)"-->
+          <!--        ></app-icon>-->
+        </div>
+      </td>
+    </ng-template>
+  </ng-container>
+</div>
