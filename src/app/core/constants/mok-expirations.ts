@@ -9,6 +9,6 @@ export const MOK_EXPIRATION_TYPES: IExpirationType[] = [
   {
     id: 2,
     title: 'Unexpirable',
-    value: 'unexpirable'
+    value: 'non_expirable'
   }
 ];
