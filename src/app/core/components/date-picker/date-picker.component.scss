@@ -4,7 +4,7 @@
 .text-label {
   @include font-base(12px, 400, 16px, normal, $open-sans);
 
-  color: $grey-3;
+  color: $grey;
   margin-bottom: 8px;
 
   & .required {
@@ -32,7 +32,7 @@
 .text-input {
   @include font-base(12px, 400, 16px, normal, $open-sans);
 
-  color: $grey-3;
+  color: $grey;
   background: transparent;
   border: none;
   outline: none;
@@ -42,7 +42,7 @@
   &::placeholder {
     @include font-base(13px, 400, 18px, normal, $open-sans);
 
-    color: $grey-2;
+    color: $grey;
   }
 }
 

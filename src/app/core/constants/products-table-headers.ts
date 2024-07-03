@@ -1,17 +1,17 @@
-import { TableHeaderModel } from '@core/models';
+import { TableHeaderModel } from '@core/models/table.model';
 
 export const PRODUCTS_TABLE_HEADERS: TableHeaderModel[] = [
   {
     title: 'ID',
-    colWidth: 200
+    colWidth: 100
   },
   {
     title: 'Name',
-    colWidth: 200
+    colWidth: 300
   },
   {
     title: 'Manufacture date',
-    colWidth: 321
+    colWidth: 200
   },
   {
     title: 'Expiration date',
@@ -19,10 +19,10 @@ export const PRODUCTS_TABLE_HEADERS: TableHeaderModel[] = [
   },
   {
     title: 'Comment',
-    colWidth: 200
+    colWidth: 300
   },
   {
     title: 'Actions',
-    colWidth: 160
+    colWidth: 120
   }
 ];

@@ -11,12 +11,12 @@
 }
 
 @mixin base-modal($width: 685px) {
-  .mat-dialog-content {
+  .mat-mdc-dialog-content {
     padding: 0;
     margin: 0;
   }
 
-  .mat-dialog-container {
+  .mat-mdc-dialog-container {
     width: $width;
     max-width: $width;
     max-height: 90vh;
@@ -37,7 +37,7 @@
     &__title {
       @include font-base(21px, 500, 26px, normal, $roboto);
 
-      color: $grey-3;
+      color: $grey;
     }
 
     &__icon {
@@ -67,11 +67,4 @@
       height: 44px;
     }
   }
-}
-
-@mixin truncate($width) {
-  width: $width;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }

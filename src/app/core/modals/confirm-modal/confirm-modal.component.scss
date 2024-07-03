@@ -1,0 +1,51 @@
+@import "src/assets/styles/vars";
+@import "src/assets/styles/mixins";
+@import "src/assets/styles/extends";
+
+::ng-deep .confirm-modal {
+  @include base-modal(500px);
+
+  & .delete-modal-header {
+    padding: 24px 20px 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    &__icon {
+      cursor: pointer;
+    }
+  }
+
+  & .modal-body {
+    padding: 0 20px 24px 20px;
+  }
+
+  & .text {
+    &-main {
+      @include font-base(17px, 400, 21px, normal, $roboto);
+
+      color: $grey;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    &-secondary {
+      @include font-base(12px, 400, 16px, normal, $open-sans);
+
+      color: $grey;
+      margin-bottom: 38px;
+      text-align: center;
+      white-space: pre;
+    }
+  }
+
+  & .actions {
+    gap: 24px;
+    display: flex;
+    align-items: center;
+
+    & .btn {
+      width: 50%;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+<div class="delete-modal-header">
+  <mat-icon
+    class="delete-modal-header__icon"
+    [fontIcon]="'close'"
+    (click)="closeModal()"
+  ></mat-icon>
+</div>
+<div class="modal-body">
+  <p class="text-main">{{ modalData.title }}</p>
+  <p class="text-secondary">{{ modalData.subtitle }}</p>
+
+  <div class="actions">
+    <button class="btn" mat-raised-button (click)="closeModal()">
+      {{ modalData.leftBtnText }}
+    </button>
+
+    <button
+      class="btn"
+      mat-raised-button
+      color="primary"
+      (click)="closeModal(true)"
+    >
+      {{ modalData.rightBtnText }}
+    </button>
+  </div>
+</div>

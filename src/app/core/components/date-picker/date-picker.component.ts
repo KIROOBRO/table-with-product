@@ -45,6 +45,7 @@ export class DatePickerComponent implements OnInit {
   @Input() isRequired = false;
   @Input() textLabel: string;
   @Input() placeholderText: string;
+  @Input() minDate: Date;
   @Input() dateControl: FormControl = new FormControl(null);
 
   public formControl: FormControl = new FormControl(null);

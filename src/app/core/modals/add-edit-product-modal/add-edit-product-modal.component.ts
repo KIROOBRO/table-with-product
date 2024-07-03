@@ -1,4 +1,10 @@
-import { Component, Inject, OnInit, Self } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnInit,
+  Self,
+  TrackByFunction
+} from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -9,8 +15,10 @@ import {
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MOK_EXPIRATION_TYPES } from '@core/constants/mok-expirations';
 import { EProductFormKeys } from '@core/enums/e-product-form-keys';
-import { IField, IProduct } from '@core/interfaces';
+import { IExpirationType, IField, IProduct } from '@core/interfaces';
 import { NgOnDestroy } from '@core/services';
+import { trackByFnById } from '@core/utils/functions';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-add-edit-product-modal',
@@ -21,8 +29,13 @@ import { NgOnDestroy } from '@core/services';
 export class AddEditProductModalComponent implements OnInit {
   public formGroup: FormGroup;
 
-  public EProductFormKeys = EProductFormKeys;
   public MOK_EXPIRATION_TYPES = MOK_EXPIRATION_TYPES;
+  public EProductFormKeys = EProductFormKeys;
+
+  public isShowExpirationDate = false;
+
+  public trackByExpirationTypes: TrackByFunction<IExpirationType> =
+    trackByFnById;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private readonly data: IProduct,
@@ -35,13 +48,20 @@ export class AddEditProductModalComponent implements OnInit {
     return this.data?.id ? 'Edit product' : 'Add product';
   }
 
+  public get getSubmitBtnName(): string {
+    return this.data?.id ? 'Save product' : 'Add product';
+  }
+
   public get fieldsFormArray(): FormArray {
     return this.formGroup.get(EProductFormKeys.FIELDS) as FormArray;
   }
 
+  public trackByFields: TrackByFunction<AbstractControl> = (idx: number) => idx;
+
   ngOnInit(): void {
     this.dialogRef.addPanelClass('add-edit-product-modal');
     this.initFormGroup(this.data);
+    this.startExpirationTypeWatching();
   }
 
   public closeModal(): void {
@@ -92,10 +112,8 @@ export class AddEditProductModalComponent implements OnInit {
 
   private initFieldsFormArray(fields: IField[]): FormArray {
     return this.fb.array(
-      fields.map((el) =>
-        el.name && el.value && el.is_date
-          ? this.addNewFieldGroup(el.name, el.value, el.is_date)
-          : this.addNewFieldGroup()
+      fields.map((el: IField) =>
+        this.addNewFieldGroup(el.name, el.value, el.is_date)
       )
     );
   }
@@ -110,5 +128,24 @@ export class AddEditProductModalComponent implements OnInit {
       value: [value, [Validators.required]],
       is_date: [is_date]
     });
+  }
+
+  private startExpirationTypeWatching(): void {
+    this.isShowExpirationDate =
+      this.formGroup.get(EProductFormKeys.EXPIRATION_TYPE)?.value ===
+      'expirable';
+
+    this.formGroup
+      .get(EProductFormKeys.EXPIRATION_TYPE)
+      ?.valueChanges.pipe(takeUntil(this.ngOnDestroy$))
+      .subscribe((value) => {
+        this.isShowExpirationDate = value === 'expirable';
+
+        if (this.isShowExpirationDate) {
+          this.formGroup
+            .get(EProductFormKeys.EXPIRATION_DATE)
+            ?.setValidators(Validators.required);
+        }
+      });
   }
 }

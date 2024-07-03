@@ -11,6 +11,7 @@
       class="text-input"
       matInput
       readonly
+      [min]="minDate"
       [matDatepicker]="picker"
       [formControl]="formControl"
       (dateChange)="dateChanged($event)"

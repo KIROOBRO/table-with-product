@@ -1,4 +1,6 @@
-export const MOK_EXPIRATION_TYPES = [
+import { IExpirationType } from '@core/interfaces';
+
+export const MOK_EXPIRATION_TYPES: IExpirationType[] = [
   {
     id: 1,
     title: 'Expirable',

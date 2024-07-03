@@ -28,7 +28,7 @@
     top: 0;
     left: 0;
     z-index: 10;
-    background-color: $grey-2;
+    background-color: $blue;
   }
 
   & th, td {
@@ -47,47 +47,23 @@
   text-align: left;
 
   &__title {
-    //@include font-base(14px, 600, 19px, normal, $open-sans);
+    @include font-base(14px, 600, 19px, normal, $open-sans);
 
-    //color: $grey-3;
+    color: $grey;
   }
 }
 
 .table-row {
   height: 49px;
   padding: 6px 0;
-  //background: $grey-4;
 }
 
 .table-cell {
   padding: 16px 20px;
-
-  &-inner {
-    padding: 24px 52px;
-    //background: $grey-4;
-  }
-
-  & .table-flex-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
 }
 
 .table-text {
-  //@include font-base(14px, 400, 19px, normal, $open-sans);
-  //
-  //color: $grey-3;
+  @include font-base(14px, 400, 19px, normal, $open-sans);
 
-  &.truncate {
-    //@include truncate(calc(100% - 42px));
-
-    &-full {
-      //@include truncate(calc(100% - 1px));
-    }
-  }
-
-  &.right {
-    text-align: right;
-  }
+  color: $grey;
 }

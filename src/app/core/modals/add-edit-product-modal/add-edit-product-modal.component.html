@@ -10,6 +10,7 @@
 <div class="modal-body">
   <div class="form-wrapper">
     <app-text-input
+      [isRequired]="true"
       [textLabel]="'Name'"
       [placeholderText]="'Enter the product name'"
       [textFormControl]="
@@ -25,7 +26,10 @@
         "
       >
         <mat-option
-          *ngFor="let type of MOK_EXPIRATION_TYPES"
+          *ngFor="
+            let type of MOK_EXPIRATION_TYPES;
+            trackBy: trackByExpirationTypes
+          "
           [value]="type.value"
         >
           {{ type.title }}
@@ -43,7 +47,11 @@
 
       <div
         class="fields-wrapper-item"
-        *ngFor="let field of fieldsFormArray.controls; index as idx"
+        *ngFor="
+          let field of fieldsFormArray.controls;
+          index as idx;
+          trackBy: trackByFields
+        "
       >
         <app-text-input
           [placeholderText]="'*'"
@@ -58,7 +66,6 @@
 
         <ng-template #datePickerTemp>
           <app-date-picker
-            [textLabel]="'Manufacture date'"
             [dateControl]="field.get('value') | controlConverter"
           ></app-date-picker>
         </ng-template>
@@ -85,23 +92,26 @@
     </div>
 
     <app-date-picker
+      [isRequired]="true"
+      [textLabel]="'Manufacture date'"
       [dateControl]="
         formGroup.get(EProductFormKeys.MANUFACTURE_DATE) | controlConverter
       "
     ></app-date-picker>
 
     <app-date-picker
-      *ngIf="
-        formGroup.get(EProductFormKeys.EXPIRATION_TYPE)?.value === 'expirable'
-      "
+      *ngIf="isShowExpirationDate"
+      [isRequired]="true"
       [textLabel]="'Expiration date'"
+      [minDate]="formGroup.get(EProductFormKeys.MANUFACTURE_DATE)?.value"
       [dateControl]="
         formGroup.get(EProductFormKeys.EXPIRATION_DATE) | controlConverter
       "
     ></app-date-picker>
 
     <app-text-area
-      [placeholderText]="'Ex. This product is...'"
+      [textLabel]="'Comment'"
+      [placeholderText]="'Enter the comment'"
       [textAreaFormControl]="
         formGroup.get(EProductFormKeys.COMMENT) | controlConverter
       "
@@ -117,6 +127,6 @@
     [disabled]="!formGroup.valid"
     (click)="handleSubmit()"
   >
-    Add product
+    {{ getSubmitBtnName }}
   </button>
 </div>

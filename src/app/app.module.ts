@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TableModule } from '@core/components/table/table.module';
 import { ApiInterceptor } from '@core/interceptors/api.interceptor';
 import { AddEditProductModalModule } from '@core/modals/add-edit-product-modal/add-edit-product-modal.module';
+import { ConfirmModalModule } from '@core/modals/confirm-modal/confirm-modal.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,7 +22,8 @@ import { AppComponent } from './app.component';
     TableModule,
     MatButtonModule,
     AddEditProductModalModule,
-    MatIconModule
+    MatIconModule,
+    ConfirmModalModule
   ],
   providers: [
     {

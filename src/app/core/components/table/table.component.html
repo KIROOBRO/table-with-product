@@ -20,13 +20,7 @@
       <tbody class="table-body">
         <ng-container
           *ngFor="
-            let tableItem of tableData.results
-              | paginate
-                : {
-                    itemsPerPage: currentCount,
-                    currentPage: currentPage,
-                    totalItems: tableData.count
-                  };
+            let tableItem of tableData;
             index as index;
             trackBy: trackByFn
           "
@@ -46,14 +40,5 @@
         </ng-container>
       </tbody>
     </table>
-  </div>
-</div>
-
-<div *ngIf="isShowPagination" class="pagination-wrapper">
-  <div class="pagination">
-    <pagination-controls
-      [maxSize]="5"
-      (pageChange)="handlePageChange($event)"
-    ></pagination-controls>
   </div>
 </div>

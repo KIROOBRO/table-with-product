@@ -1,19 +1,19 @@
 <div class="container">
-  <div class="add-btn">
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="openAddEditProductModal()"
-    >
-      Add product
-    </button>
-  </div>
+  <button
+    class="add-btn"
+    mat-raised-button
+    color="primary"
+    (click)="openAddEditProductModal()"
+  >
+    Add product
+  </button>
 
   <ng-container *ngIf="products$ | async as products">
     <app-table
       [tableHeaders]="PRODUCTS_TABLE_HEADERS"
       [tableData]="products"
       [cellTemplateRef]="cellTemplateRef"
+      [trackByFn]="trackByProducts"
     ></app-table>
     <ng-template #cellTemplateRef let-tableItem>
       <td class="table-cell">
@@ -37,19 +37,19 @@
         </p>
       </td>
       <td class="table-cell">
-        <p class="table-text">
+        <p class="table-text truncate">
           {{ tableItem.comment || '-' }}
         </p>
       </td>
       <td class="table-cell">
         <div class="actions">
           <mat-icon
-            class="actions edit"
+            class="actions icon"
             [fontIcon]="'edit'"
             (click)="openAddEditProductModal(tableItem)"
           ></mat-icon>
           <mat-icon
-            class="actions delete"
+            class="actions icon"
             [fontIcon]="'delete'"
             (click)="openDeleteModal(tableItem.id)"
           ></mat-icon>

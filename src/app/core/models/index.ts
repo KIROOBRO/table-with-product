@@ -1,2 +1,3 @@
+export * from './confirm-modal.model';
 export * from './table.model';
-export * from './paginated-response.model';
+export * from './track-by.model';

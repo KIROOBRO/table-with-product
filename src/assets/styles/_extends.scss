@@ -1,3 +1,5 @@
+@import "src/assets/styles/vars";
+
 .scroll-bar {
   &::-webkit-scrollbar {
     width: 5px;
@@ -9,7 +11,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: cornflowerblue;
+    background: $grey-2;
     border-radius: 4px;
   }
 }
