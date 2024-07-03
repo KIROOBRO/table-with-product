@@ -1,0 +1,122 @@
+<div class="modal-header">
+  <h2 class="modal-header__title">{{ getHeaderName }}</h2>
+
+  <mat-icon
+    class="modal-header__icon"
+    [fontIcon]="'close'"
+    (click)="closeModal()"
+  ></mat-icon>
+</div>
+<div class="modal-body">
+  <div class="form-wrapper">
+    <app-text-input
+      [textLabel]="'Name'"
+      [placeholderText]="'Enter the product name'"
+      [textFormControl]="
+        formGroup.get(EProductFormKeys.NAME) | controlConverter
+      "
+    ></app-text-input>
+
+    <mat-form-field class="form-control" appearance="fill">
+      <mat-label>Expiration Type</mat-label>
+      <mat-select
+        [formControl]="
+          formGroup.get(EProductFormKeys.EXPIRATION_TYPE) | controlConverter
+        "
+      >
+        <mat-option
+          *ngFor="let type of MOK_EXPIRATION_TYPES"
+          [value]="type.value"
+        >
+          {{ type.title }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="fields-wrapper">
+      <div class="fields-wrapper-header">
+        <p class="fields-wrapper-header-item">Field</p>
+        <p class="fields-wrapper-header-item">Value</p>
+        <p class="fields-wrapper-header-item centered">Date</p>
+        <p class="fields-wrapper-header-item centered">Del</p>
+      </div>
+
+      <div
+        class="fields-wrapper-item"
+        *ngFor="let field of fieldsFormArray.controls; index as idx"
+      >
+        <app-text-input
+          [placeholderText]="'*'"
+          [textFormControl]="field.get('name') | controlConverter"
+        ></app-text-input>
+
+        <app-text-input
+          *ngIf="!field.get('is_date')?.value; else datePickerTemp"
+          [placeholderText]="'*'"
+          [textFormControl]="field.get('value') | controlConverter"
+        ></app-text-input>
+
+        <ng-template #datePickerTemp>
+          <app-date-picker
+            [textLabel]="'Manufacture date'"
+            [dateControl]="field.get('value') | controlConverter"
+          ></app-date-picker>
+        </ng-template>
+
+        <mat-checkbox
+          class="centered"
+          [formControl]="field.get('is_date') | controlConverter"
+          (change)="handleClearFieldValue(field)"
+        ></mat-checkbox>
+
+        <div class="centered" (click)="deleteField(field, idx)">
+          <mat-icon class="pointer" [fontIcon]="'delete'"></mat-icon>
+        </div>
+      </div>
+
+      <button
+        class="fields-wrapper-btn"
+        mat-raised-button
+        color="primary"
+        (click)="addField()"
+      >
+        Add
+      </button>
+    </div>
+
+    <app-date-picker
+      [dateControl]="
+        formGroup.get(EProductFormKeys.MANUFACTURE_DATE) | controlConverter
+      "
+    ></app-date-picker>
+
+    <app-date-picker
+      *ngIf="
+        formGroup.get(EProductFormKeys.EXPIRATION_TYPE)?.value === 'expirable'
+      "
+      [textLabel]="'Expiration date'"
+      [dateControl]="
+        formGroup.get(EProductFormKeys.EXPIRATION_DATE) | controlConverter
+      "
+    ></app-date-picker>
+
+    <app-text-area
+      [placeholderText]="'Ex. This product is...'"
+      [textAreaFormControl]="
+        formGroup.get(EProductFormKeys.COMMENT) | controlConverter
+      "
+    ></app-text-area>
+  </div>
+</div>
+<div class="modal-footer">
+  <button mat-raised-button (click)="closeModal()">Close</button>
+
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!formGroup.valid"
+    (click)="handleSubmit()"
+  >
+    Add product
+  </button>
+</div>

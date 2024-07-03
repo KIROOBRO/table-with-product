@@ -5,16 +5,10 @@
 ::ng-deep .add-edit-product-modal {
   @include base-modal();
 
-  & .form {
-    &-wrapper {
-      gap: 24px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    &-control {
-      width: 100%;
-    }
+  & .form-wrapper {
+    gap: 24px;
+    display: flex;
+    flex-direction: column;
   }
 
   & .fields-wrapper {

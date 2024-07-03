@@ -6,51 +6,17 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-  MatDateFormats
-} from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-  MomentDateAdapter
-} from '@angular/material-moment-adapter';
+import { MOK_EXPIRATION_TYPES } from '@core/constants/mok-expirations';
 import { EProductFormKeys } from '@core/enums/e-product-form-keys';
 import { IField, IProduct } from '@core/interfaces';
 import { NgOnDestroy } from '@core/services';
-import * as moment from 'moment';
-import { distinctUntilChanged, takeUntil } from 'rxjs';
-
-import { MOK_EXPIRATION_TYPES } from '../../constants/mok-expirations';
-
-const MY_FORMATS = {
-  parse: {
-    dateInput: 'DD.MM.YYYY'
-  },
-  display: {
-    dateInput: 'DD.MM.YYYY',
-    monthYearLabel: 'MMM YYYY',
-    monthLabel: 'MMMM',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY'
-  }
-};
 
 @Component({
   selector: 'app-add-edit-product-modal',
   templateUrl: './add-edit-product-modal.component.html',
   styleUrls: ['./add-edit-product-modal.component.scss'],
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-    NgOnDestroy
-  ]
+  providers: [NgOnDestroy]
 })
 export class AddEditProductModalComponent implements OnInit {
   public formGroup: FormGroup;
@@ -60,13 +26,10 @@ export class AddEditProductModalComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private readonly data: IProduct,
-    @Inject(MAT_DATE_FORMATS) private dateFormats: MatDateFormats,
     @Self() private readonly ngOnDestroy$: NgOnDestroy,
     private dialogRef: MatDialogRef<AddEditProductModalComponent>,
     private fb: FormBuilder
-  ) {
-    dateFormats.display.dateInput = 'DD.MM.YYYY';
-  }
+  ) {}
 
   public get getHeaderName(): string {
     return this.data?.id ? 'Edit product' : 'Add product';
@@ -79,7 +42,6 @@ export class AddEditProductModalComponent implements OnInit {
   ngOnInit(): void {
     this.dialogRef.addPanelClass('add-edit-product-modal');
     this.initFormGroup(this.data);
-    this.startDateControlsWatching();
   }
 
   public closeModal(): void {
@@ -106,12 +68,6 @@ export class AddEditProductModalComponent implements OnInit {
 
   public handleClearFieldValue(field: AbstractControl): void {
     field.get('value')?.reset('');
-  }
-
-  public handleChangeFieldDateValue(field: AbstractControl): void {
-    field
-      .get('value')
-      ?.setValue(moment(field.get('value')?.value).format('YYYY-MM-DD'));
   }
 
   private initFormGroup(product: IProduct): void {
@@ -154,25 +110,5 @@ export class AddEditProductModalComponent implements OnInit {
       value: [value, [Validators.required]],
       is_date: [is_date]
     });
-  }
-
-  private startDateControlsWatching(): void {
-    this.formGroup
-      .get(EProductFormKeys.EXPIRATION_DATE)
-      ?.valueChanges.pipe(distinctUntilChanged(), takeUntil(this.ngOnDestroy$))
-      .subscribe((value) =>
-        this.formGroup
-          .get(EProductFormKeys.EXPIRATION_DATE)
-          ?.setValue(moment(value).format('YYYY-MM-DD'))
-      );
-
-    this.formGroup
-      .get(EProductFormKeys.MANUFACTURE_DATE)
-      ?.valueChanges.pipe(distinctUntilChanged(), takeUntil(this.ngOnDestroy$))
-      .subscribe((value) =>
-        this.formGroup
-          .get(EProductFormKeys.MANUFACTURE_DATE)
-          ?.setValue(moment(value).format('YYYY-MM-DD'))
-      );
   }
 }

@@ -29,6 +29,9 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "allowedCommonJsDependencies": [
+              "moment"
+            ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
@@ -49,6 +52,7 @@
                   "maximumError": "4kb"
                 }
               ],
+              "aot": true,
               "outputHashing": "all"
             },
             "development": {

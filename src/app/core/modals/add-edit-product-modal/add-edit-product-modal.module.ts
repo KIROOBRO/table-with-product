@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { DatePickerModule } from '@core/components/date-picker/date-picker.module';
+import { TextAreaModule } from '@core/components/text-area/text-area.module';
+import { TextInputModule } from '@core/components/text-input/text-input.module';
 import { ControlConverterModule } from '@core/pipes/control-converter/control-converter.module';
 
 import { AddEditProductModalComponent } from './add-edit-product-modal.component';
@@ -20,14 +20,13 @@ import { AddEditProductModalComponent } from './add-edit-product-modal.component
     MatDialogModule,
     MatIconModule,
     MatButtonModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
     MatSelectModule,
     ReactiveFormsModule,
     ControlConverterModule,
-    MatCheckboxModule
-  ],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-US' }]
+    MatCheckboxModule,
+    TextInputModule,
+    TextAreaModule,
+    DatePickerModule
+  ]
 })
 export class AddEditProductModalModule {}

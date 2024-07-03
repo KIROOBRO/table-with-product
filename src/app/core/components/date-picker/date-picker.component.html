@@ -1,0 +1,21 @@
+<div class="field-wrapper">
+  <p *ngIf="textLabel" class="text-label">
+    {{ textLabel }} <span class="required" *ngIf="isRequired">*</span>
+  </p>
+
+  <div
+    class="input-container"
+    [class.error]="formControl.dirty && formControl.errors"
+  >
+    <input
+      class="text-input"
+      matInput
+      readonly
+      [matDatepicker]="picker"
+      [formControl]="formControl"
+      (dateChange)="dateChanged($event)"
+    />
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </div>
+</div>

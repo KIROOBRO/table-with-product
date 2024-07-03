@@ -1,0 +1,13 @@
+<div class="field-wrapper">
+  <p *ngIf="textLabel" class="text-label">
+    {{ textLabel }}
+  </p>
+
+  <textarea
+    class="text-area"
+    [placeholder]="placeholderText"
+    [formControl]="textAreaFormControl"
+    [maxlength]="maxLetters"
+  >
+  </textarea>
+</div>

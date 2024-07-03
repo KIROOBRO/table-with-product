@@ -1,14 +1,13 @@
 import { Component, OnInit, Self } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PRODUCTS_TABLE_HEADERS } from '@core/constants/products-table-headers';
 import { IProduct } from '@core/interfaces';
+import { AddEditProductModalComponent } from '@core/modals/add-edit-product-modal/add-edit-product-modal.component';
 import { PaginatedResponseModel } from '@core/models';
 import { NgOnDestroy } from '@core/services';
 import { ProductsService } from '@core/services/products.service';
-import { filter, Observable, switchMap, takeUntil, tap } from 'rxjs';
-
-import { PRODUCTS_TABLE_HEADERS } from './constants/products-table-headers';
-import { AddEditProductModalComponent } from './modals/add-edit-product-modal/add-edit-product-modal.component';
+import { filter, Observable, switchMap, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -43,13 +42,28 @@ export class AppComponent implements OnInit {
       .pipe(
         filter(Boolean),
         takeUntil(this.ngOnDestroy$),
-        switchMap((res: IProduct) => this.productsService.postProduct(res)),
-        tap(() => {
-          this.snackBar.open('The product has been added!');
-          this.initProducts();
-        })
+        switchMap((res: IProduct) => {
+          if (res.id) {
+            return this.productsService.patchProduct(res.id, res);
+          }
+
+          return this.productsService.postProduct(res);
+        }),
+        switchMap(() => this.initProducts())
       )
-      .subscribe();
+      .subscribe(() => {
+        if (product?.id) {
+          this.snackBar.open('The product has been edited!');
+
+          return;
+        }
+
+        this.snackBar.open('The product has been added!');
+      });
+  }
+
+  public openDeleteModal(productId: number): void {
+    console.log(productId, 'productId');
   }
 
   private initProducts(): Observable<PaginatedResponseModel<IProduct>> {

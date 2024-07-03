@@ -43,17 +43,16 @@
       </td>
       <td class="table-cell">
         <div class="actions">
-          <!--        <app-icon-->
-          <!--          class="actions invite"-->
-          <!--          [name]="'add_user_circle'"-->
-          <!--          (click)="openInviteModal($event, tableItem.id)"-->
-          <!--        ></app-icon>-->
-
-          <!--        <app-icon-->
-          <!--          class="actions delete"-->
-          <!--          [name]="'delete'"-->
-          <!--          (click)="openDeleteModal($event, tableItem.id)"-->
-          <!--        ></app-icon>-->
+          <mat-icon
+            class="actions edit"
+            [fontIcon]="'edit'"
+            (click)="openAddEditProductModal(tableItem)"
+          ></mat-icon>
+          <mat-icon
+            class="actions delete"
+            [fontIcon]="'delete'"
+            (click)="openDeleteModal(tableItem.id)"
+          ></mat-icon>
         </div>
       </td>
     </ng-template>

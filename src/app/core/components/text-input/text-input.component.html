@@ -1,0 +1,22 @@
+<div class="input-container">
+  <p *ngIf="textLabel" class="text-label">
+    {{ textLabel }} <span class="required" *ngIf="isRequired">*</span>
+  </p>
+
+  <input
+    #textInput
+    type="text"
+    class="text-input"
+    [class.wrong]="textFormControl.dirty && textFormControl.errors"
+    [placeholder]="placeholderText || ''"
+    [formControl]="textFormControl"
+  />
+
+  <div
+    *ngIf="textFormControl.dirty && textFormControl.errors && errorText"
+    class="error"
+  >
+    <mat-icon class="error__icon" [fontIcon]="'warning'"></mat-icon>
+    <p class="error__text">{{ errorText }}</p>
+  </div>
+</div>
